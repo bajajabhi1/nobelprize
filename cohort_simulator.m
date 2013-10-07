@@ -1,4 +1,6 @@
+%%%Arpit Gupta
 %n is the number of individuals you want to draw
+%%%
 
 function []  = cohort_simulator(n,pop_density)
 cohort = rand(n,length(pop_density),2)
