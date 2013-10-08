@@ -1,5 +1,5 @@
 %%%%
-%%% Abhinav Bajaj	
+%%% Abhinav Bajaj	%%%
 %%%%
 
 noOfSubPop = 5;
@@ -16,19 +16,21 @@ subPops = zeros(noOfSubPop,noOfMarkerLoci);
 for i = 1:noOfSubPop
 	subPops(i,:) = subPopulation_simulator(noOfMarkerLoci,freqParam);
 end
-disp(subPops); 
-disp('+++++++++++++++++++++++++++++++++');
+
+disp('SubPopulations generated');
 pops = zeros(noOfPop,noOfMarkerLoci);
 ratios = zeros(noOfSubPop,noOfPop);
 for i = 1: noOfPop
 	[pops(i,:),ratios(:,i)] = population_simulator(subPops,drawFrom);
 end
 
-disp(pops);
-disp('+++++++++++++++++++++++++++++++++');
+
+disp('Population Gene Densities Generated');
 
 indiv = zeros(noOfPop,noOfIndiv,noOfMarkerLoci);
 for i = 1:noOfPop
 	indiv(i,:,:) = cohort_simulator(noOfIndiv,pops(i,:)) ; 
 end
-disp(indiv);
+disp('Cohorts drawn from population densities');
+save('Population_data.mat','indiv','pops','subPops','ratios');
+
