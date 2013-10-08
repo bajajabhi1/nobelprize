@@ -3,9 +3,9 @@
 %%ratios and drawFrom should be column vectors
 %%drawFrom is 1 for the subpopulation from which we want to draw our population, otherwise it is zero
 %%%%%%%%
-function [pop] = population_simulator(subPopulations,drawFrom,ratios)
+function [pop,ratios] = population_simulator(subPopulations,drawFrom,ratios)
 if nargin == 1 
-	drawFrom = ones(1,size(subPopulations,1)) ; 
+	drawFrom = ones(size(subPopulations,1),1) ; 
 endif
 if nargin < 3
 	 

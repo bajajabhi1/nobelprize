@@ -5,7 +5,7 @@
 
 function [sample] = subPopulation_simulator(n,w)
 
-sample = exp(w*rand(n,1)- w);
+sample = exp(w*rand(1,n)- w);
 
 
 
