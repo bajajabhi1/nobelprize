@@ -1,0 +1,1 @@
+try some values of w or frq_param to be passed to subpopulation_simulator, I tried and for n < 745, exp(-n) is just 0, approximation and rounding off problem in matlab. so may want to change value of w to this. -Arpit
