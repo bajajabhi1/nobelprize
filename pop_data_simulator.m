@@ -4,9 +4,9 @@
 
 noOfSubPop = 5;
 noOfPop = 3;
-noOfMarkerLoci = 10;
-freqParam = 1e2; %% 1000, Wright Fisher model
-noOfIndiv = 10;
+noOfMarkerLoci = 10000;
+freqParam = 1e3; %% 1000, Wright Fisher model
+noOfIndiv = 1000;
 
 %%
 drawFrom  = ones(noOfSubPop,1);
@@ -27,9 +27,9 @@ end
 
 disp('Population Gene Densities Generated');
 
-indiv = zeros(noOfPop,noOfIndiv,noOfMarkerLoci);
+indiv = zeros(noOfIndiv,noOfMarkerLoci,noOfPop);
 for i = 1:noOfPop
-	indiv(i,:,:) = cohort_simulator(noOfIndiv,pops(i,:)) ; 
+	indiv(:,:,i) = cohort_simulator(noOfIndiv,pops(i,:)) ; 
 end
 disp('Cohorts drawn from population densities');
 save('Population_data.mat','indiv','pops','subPops','ratios');
