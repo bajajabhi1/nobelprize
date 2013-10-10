@@ -1,0 +1,8 @@
+1. Add directory where files lie bin/mallet import-dir --input pathway\to\the\directory\with\the\files --output tutorial.mallet --keep-sequence --remove-stopwords
+2. Train models bin/mallet train-topics  --input tutorial.mallet --num-topics 20 --output-state ../nobel/nobelprize/topic-state.gz --output-topic-keys ../nobel/nobelprize/tutorial_keys.txt --output-doc-topics ../nobel/nobelprize/tutorial_compostion.txt
+
+3.
+
+
+
+
