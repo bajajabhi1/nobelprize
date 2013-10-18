@@ -15,17 +15,34 @@ switch(outPopFormat)
 	case 1
 		disp('GENERATING EIGENSTRAT FORMAT');
 		filename = 'eigen.geno';
-		disp(size(indiv,3));
+		%disp(size(indiv,3));
 		for i=1:size(indiv,3)
 			dlmwrite(filename,indiv(:,:,i)','-append','delimiter','');
 		end
 		filename = 'eigen.ind';
-		%for()
-		%sprintf('             SAMPLE4 F    Control');
-		%sprintf('             SAMPLE1 M       Case');
-		%end
-		filename = 'eigen.snp'
-		%rs0000  11        0.000000               0 A C
+		count = 0;
+		for i=1:size(indiv,3)
+			cas = rand(1,size(indiv,1));
+			for j=1:size(indiv,1)
+				count = count+1;
+				gen = rand(1,1);
+				caseText = 'Control';
+				genText = 'M';
+				if cas(j)>0.5
+					caseText = 'Case';
+				end
+				if gen>0.5
+					genText = 'F';
+				end
+				dlmwrite(filename,sprintf('             SAMPLE%d %s   %s',count,genText,caseText),'-append','delimiter','');
+			end
+		end
+		filename = 'eigen.snp';
+		count=0;
+		for i=1:size(indiv,2);
+			dlmwrite(filename,sprintf('rs%d  11        0.000000               0 A C',count),'-append','delimiter','');
+			count=count+1;	
+		end
 	case 2
 		disp('GENERATING STRUCTURE FORMAT');
 	case 3

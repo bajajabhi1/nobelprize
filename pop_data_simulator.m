@@ -8,9 +8,9 @@ function pop_data_simulator(outPopFormat)
 
 noOfSubPop = 5;
 noOfPop = 3;
-noOfMarkerLoci = 1000;
+noOfMarkerLoci = 10;
 freqParam = 1e3; %% 1000, Wright Fisher model
-noOfIndiv = 1000;
+noOfIndiv = 10;
 
 %%
 drawFrom  = ones(noOfSubPop,1);
