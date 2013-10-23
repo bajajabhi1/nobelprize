@@ -39,13 +39,15 @@ index = 1:1000000;
 for i = 1:noOfPop
 	%whos
 	pops = population_simulator(subPops,drawFrom,ratios(:,i));
-	for j = 1:noOfIndiv
+	k = 0 
+	for j = 1:1000
+		k = j -1 ;
 		filename = sprintf('files/pop%dindiv%d',i,j);
-		indiv = cohort_simulator(1,pops) ; 
-		fid = fopen(filename,'w');
-		fprintf(fid,formatSpec,[index;indiv]);
-		fclose(fid);
-		disp(filename);
+		indiv = cohort_simulator(noOfIndiv,pops(k*1000+1:j*1000),i,k*1000+1)    ; 
+		%fid = fopen(filename,'w');
+		%fprintf(fid,formatSpec,[index;indiv]);
+		%fclose(fid);
+		%disp(filename);
 	end
 end
 %% write the output population generated
