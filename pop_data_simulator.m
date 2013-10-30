@@ -1,5 +1,5 @@
-%%%%
-%%% Abhinav Bajaj	%%%
+%%%% use for topic modelling
+%%% Arpit Gupta-Abhinav Bajaj	%%%
 %%% Usage pop_data_simulator(outPopformat)
 %%%
 %%% outPopFormat - Output file format for Population
