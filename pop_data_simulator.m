@@ -14,9 +14,11 @@ noOfIndiv = 500;
 %%
 drawFrom  = ones(noOfSubPop,1);
 ratios1 = [0.7;0.2;0.1]; % Ratios of contribution of each sub pop
-ratios2 = [0.4;0;0.6];
+ratios2 = [0.4;0.0;0.6];
 ratios3 = [0.2;0.3;0.5];
 ratios = [ratios1 ratios2 ratios3] ;
+ratiosWrite = ratios';
+dlmwrite('true.txt',ratiosWrite,' ');
 subPops = zeros(noOfSubPop,noOfMarkerLoci);
 for i = 1:noOfSubPop
 	subPops(i,:) = subPopulation_simulator(noOfMarkerLoci,freqParam);
