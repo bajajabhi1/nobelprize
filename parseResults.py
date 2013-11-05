@@ -3,7 +3,7 @@ import re
 topics = dict()
 if __name__ == '__main__':
 	infile = file('files/gene_composition.txt',"r")
-	outfile = file('pred.txt',"w")
+	outfile = file('rawPredictions.txt',"w")
 	pop = re.compile('pop[0-9]+')
 	infile.next()
 	for line in infile:
