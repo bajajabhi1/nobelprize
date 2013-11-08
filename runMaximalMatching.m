@@ -1,6 +1,6 @@
 %run maximal matching 
 file1 = fopen('true.txt','r');
-file2 = fopen('pred.txt','r');
+file2 = fopen('rawPredictions.txt','r');
 actual = dlmread(file1);
 pred = dlmread(file2);
 actual = actual'
@@ -12,7 +12,8 @@ for i = 1:n
 		dist(i,j) = norm(actual(i,:)-pred(j,:));
 	end
 end
-dist = 1 ./ dist;
+dist
+dist = 1 ./ dist
 cd gaimc
 [error actV  predV]=bipartite_matching(dist);
 predM = pred;
@@ -30,4 +31,4 @@ disp(actV);
 disp(predM);
 disp(actM);
 cd ..
-dlmwrite('predictedFinal.txt',predM,' ');
+dlmwrite('predicted.txt',predM,' ');

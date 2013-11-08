@@ -4,52 +4,52 @@
 %%%
 %%% outPopFormat - Output file format for Population
 %%%%
-
+rand("seed",1000456);
 noOfSubPop = 3;
 noOfPop = 3;
-noOfMarkerLoci = 1000000;
-freqParam = 500; %% 1000, Wright Fisher model
-noOfIndiv = 500;
+noOfMarkerLoci = 1000;
+freq = 500;
+freqParam = 1/freq; %%  Wright Fisher model
+noOfIndiv = 100;
+
+batchSize = 1000;
+NoOfBatch = noOfMarkerLoci/batchSize;
 
 %%
 drawFrom  = ones(noOfSubPop,1);
-ratios1 = [0.7;0.2;0.1]; % Ratios of contribution of each sub pop
-ratios2 = [0.4;0.0;0.6];
-ratios3 = [0.2;0.3;0.5];
+ratios1 = [0.70;0.20;0.10]; % Ratios of contribution of each sub pop
+ratios2 = [0.20;0.65;0.15];
+ratios3 = [0.20;0.00;0.80];
 ratios = [ratios1 ratios2 ratios3] ;
 ratiosWrite = ratios';
+%a = a';
 dlmwrite('true.txt',ratiosWrite,' ');
+paramFile = sprintf('Indiv%dfreq%dsnp%d.txt',noOfIndiv,freq,noOfMarkerLoci)
+fparam  = fopen(paramFile,'w');
+fprintf(fparam,'No of individuals %d \n',noOfIndiv);
+fprintf(fparam,'No of SubPop %d \n',noOfSubPop);
+fprintf(fparam,'Freq Paramater %f \n',freqParam);
+fprintf(fparam,'No of Populations %d \n',noOfPop);
+fclose(fparam);
+
 subPops = zeros(noOfSubPop,noOfMarkerLoci);
 for i = 1:noOfSubPop
 	subPops(i,:) = subPopulation_simulator(noOfMarkerLoci,freqParam);
 end
 
 disp('SubPopulations generated');
-%pops = zeros(noOfPop,noOfMarkerLoci);
-%ratios = zeros(noOfSubPop,noOfPop);
-%for i = 1: noOfPop
-%	[pops(i,:),ratios(:,i)] = population_simulator(subPops,drawFrom);
-%end
 
-disp('Population Gene Densities Generated');
-%whos
-%indiv = zeros(noOfIndiv,noOfMarkerLoci,noOfPop);
 indiv = zeros(noOfMarkerLoci,1);
 formatSpec = 'pos%d*%d ' ; 
 index = 1:1000000;
-%whos
 for i = 1:noOfPop
-	%whos
 	pops = population_simulator(subPops,drawFrom,ratios(:,i));
 	k = 0 
-	for j = 1:1000
+	for j = 1:NoOfBatch
 		k = j -1 ;
 		filename = sprintf('files/pop%dindiv%d',i,j);
-		indiv = cohort_simulator(noOfIndiv,pops(k*1000+1:j*1000),i,k*1000+1)    ; 
-		%fid = fopen(filename,'w');
-		%fprintf(fid,formatSpec,[index;indiv]);
-		%fclose(fid);
-		%disp(filename);
+		indiv = cohort_simulator(noOfIndiv,pops(k*batchSize+1:j*batchSize),i,k*batchSize+1)    ; 
+		
 	end
 end
 %% write the output population generated
