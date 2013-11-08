@@ -6,13 +6,13 @@
 function [pop,ratios] = population_simulator(subPopulations,drawFrom,ratios)
 if nargin == 1 
 	drawFrom = ones(size(subPopulations,1),1) ; 
-endif
+end
 if nargin < 3
 	 
 		ratios = rand(size(subPopulations,1),1) ;
 		ratios = ratios .* drawFrom;
 		ratios = ratios/sum(ratios) ;
-endif
+end
 pop = zeros(1,size(subPopulations,2)) ; 
 for i = 1:size(subPopulations,2)
 	pop(i) = sum(subPopulations(:,i) .* ratios);

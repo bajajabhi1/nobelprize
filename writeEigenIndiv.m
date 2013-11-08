@@ -1,14 +1,11 @@
 %% Author - Abhinav Bajaj
 %% 
-%% Usage writeToFile(indiv, outPopFormat)
-%% Arguments -- 
-%% indiv - 3 dimensional matrix having genotype data of populations (indiv,marker,pop) 
-function writeEigenIndiv(noOfIndiv, isCase, refAllele, varAllele, filename)
+function writeEigenIndiv(startIndex, noOfIndiv, isCase, refAllele, varAllele, filename)
 caseText = 'Control';
 if isCase==1
 	caseText = 'Case';
 end
-count = 0;
+count = startIndex;
 for i=1:noOfIndiv
 	count = count+1;
 	gen = rand(1,1);

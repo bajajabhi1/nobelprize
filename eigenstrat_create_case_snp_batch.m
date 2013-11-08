@@ -80,4 +80,4 @@ for i = 1:noOfPop
 end % end for all outermost loop, snapled for all populations
 
 merge = [indivVar2' indivVar1' indivVar0' indivControl'];
-disp(size(merge));
+%disp(size(merge));
