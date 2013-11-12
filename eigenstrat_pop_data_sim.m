@@ -61,6 +61,7 @@ end
 
 disp('Population Gene Densities Generated');
 %indiv = zeros(noOfIndivVar2,lociBatchSize,noOfPop);
+indivInfo = zeros(noOfPop*(noOfIndivVar2 + noOfIndivVar1 + noOfIndivVar0),2);
 batchCtr = noOfMarkerLoci/lociBatchSize;
 disp(batchCtr);
 for j = 1:batchCtr
@@ -71,7 +72,7 @@ for j = 1:batchCtr
 		disp('Case SNP Case');
 		tmpNoOfIndiv = noOfIndivVar2 + noOfIndivVar1 + noOfIndivVar0 + noOfIndivControl;
 		tmpPopsMatrix = pops(:,(j-1)*lociBatchSize+1:j*lociBatchSize);
-		merge = eigenstrat_create_case_snp_batch(tmpPopsMatrix,noOfIndivVar2,noOfIndivVar1,noOfIndivVar0,noOfIndivControl,caseSnpLoc,lociBatchSize,alleleVar2,alleleVar1,alleleVar0,probVar2Case,probVar1Case,probVar0Case);	
+		[merge indivInfo] = eigenstrat_create_case_snp_batch(tmpPopsMatrix,noOfIndivVar2,noOfIndivVar1,noOfIndivVar0,caseSnpLoc,lociBatchSize,alleleVar2,alleleVar1,alleleVar0,probVar2Case,probVar1Case,probVar0Case);	
 	else
 	%	disp(' Other case');
 		%% create Var2
@@ -119,9 +120,10 @@ for j = 1:batchCtr
 	% write merged to file
 	dlmwrite(genoFileName,merge,'-append','delimiter','');
 end
-writeEigenIndiv(0,noOfIndivVar2*noOfPop, 1, refAllele, varAllele,indivFileName);
-writeEigenIndiv(noOfIndivVar2*noOfPop,noOfIndivVar1*noOfPop, 1, refAllele, varAllele,indivFileName);
-writeEigenIndiv((noOfIndivVar2+noOfIndivVar1)*noOfPop,noOfIndivVar0*noOfPop, 1, refAllele, varAllele,indivFileName);
-writeEigenIndiv((noOfIndivVar0+noOfIndivVar1+noOfIndivVar2)*noOfPop,noOfIndivControl*noOfPop,0, refAllele, varAllele,indivFileName);
+dlmwrite('eigenIndiv.info',indivInfo,'-append','delimiter','');
+writeEigenIndiv(indivInfo, indivFileName);
+%writeEigenIndiv(noOfIndivVar2*noOfPop,noOfIndivVar1*noOfPop, 1,indivFileName);
+%writeEigenIndiv((noOfIndivVar2+noOfIndivVar1)*noOfPop,noOfIndivVar0*noOfPop, 1,indivFileName);
+%writeEigenIndiv((noOfIndivVar0+noOfIndivVar1+noOfIndivVar2)*noOfPop,noOfIndivControl*noOfPop,0,indivFileName);
 writeEigenSnp(noOfMarkerLoci, caseSnpLoc, refAllele, varAllele, snpFileName);
 disp('Cohorts drawn from population densities');
