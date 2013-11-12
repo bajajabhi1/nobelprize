@@ -122,8 +122,5 @@ for j = 1:batchCtr
 end
 dlmwrite('eigenIndiv.info',indivInfo,'-append','delimiter','');
 writeEigenIndiv(indivInfo, indivFileName);
-%writeEigenIndiv(noOfIndivVar2*noOfPop,noOfIndivVar1*noOfPop, 1,indivFileName);
-%writeEigenIndiv((noOfIndivVar2+noOfIndivVar1)*noOfPop,noOfIndivVar0*noOfPop, 1,indivFileName);
-%writeEigenIndiv((noOfIndivVar0+noOfIndivVar1+noOfIndivVar2)*noOfPop,noOfIndivControl*noOfPop,0,indivFileName);
 writeEigenSnp(noOfMarkerLoci, caseSnpLoc, refAllele, varAllele, snpFileName);
 disp('Cohorts drawn from population densities');

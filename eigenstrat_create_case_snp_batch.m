@@ -5,14 +5,8 @@ function [merge indivInfo] = eigenstrat_create_case_snp_batch(pops,noOfIndivVar2
     
 tmpNoOfIndiv = 2 * (noOfIndivVar2 + noOfIndivVar1 + noOfIndivVar0);
 noOfPop = size(pops,1);
-%disp(noOfPop);
 indiv = zeros(noOfPop*tmpNoOfIndiv,lociBatchSize);
 indivInfo = zeros(noOfPop*tmpNoOfIndiv,2);
-%indivVar1 = zeros(noOfPop*noOfIndivVar1,lociBatchSize);
-%indivVar0 = zeros(noOfPop*noOfIndivVar0,lociBatchSize);
-%indivCVar2 = zeros(noOfPop*noOfIndivVar2,lociBatchSize);
-%indivCVar1 = zeros(noOfPop*noOfIndivVar1,lociBatchSize);
-%indivCVar0 = zeros(noOfPop*noOfIndivVar0,lociBatchSize);
 
 n2 = 0; n0 = 0; n1 = 0; nc2 = 0; nc1=0; nc0 = 0;
 nt = 0;
@@ -70,13 +64,7 @@ for i = 1:noOfPop
                                         findVar0 = false;disp('done with Var0');
                                 end
                 	end
-
-			%if (findControl & ~status) % indiv is not a case, so add to control
-                        %        nc = nc+1;
-                        %        indivControl((i-1)*noOfIndivControl+nc,:) = indivDrawn(j,:,i);
-                        %        if (nc >= noOfIndivControl)
-                        %                findControl = false;
-                        %        end
+			
 			if (~status & findCVar2 & tmpSnpDrawn == alleleVar2)
 				nt = nt+1;
                                 nc2 = nc2+1;
@@ -119,6 +107,4 @@ for i = 1:noOfPop
 	end % end of infinite while
 
 end % end for all outermost loop, sampled for all populations
-disp(indivInfo);
 merge = indiv';
-%disp(size(merge));
