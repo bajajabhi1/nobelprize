@@ -2,7 +2,7 @@ import sys
 import re
 topics = dict()
 if __name__ == '__main__':
-	infile = file('files/gene_composition.txt',"r")
+	infile = file('gene_composition.txt',"r")
 	outfile = file('rawPredictions.txt',"w")
 	pop = re.compile('pop[0-9]+')
 	infile.next()
@@ -43,6 +43,7 @@ if __name__ == '__main__':
 		for subPop in topics[pop]:
 			outfile.write(str(topics[pop][subPop]) + " ")
 		outfile.write("\n")
+	print('completed python part')
 
 
 
