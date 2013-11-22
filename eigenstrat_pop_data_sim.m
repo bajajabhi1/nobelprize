@@ -1,12 +1,12 @@
 %%%%
 %%% Abhinav Bajaj	%%%
 %%%%
-function eigenstrat_pop_data_sim(subPopCount, popCount,indivCount, noOfLoci, caseSnpAlleleLoc, alleleFreq, probOfCaseVar2, alleleRelRisk)
+function eigenstrat_pop_data_sim(subPopCount, popCount,indivCount, noOfLoci, caseSnpAlleleLoc, alleleFreq, probOfCaseVar2, alleleRelRisk,batchSize)
 rand('seed',12002);
 noOfSubPop = subPopCount;
 noOfPop = popCount;
 noOfMarkerLoci = noOfLoci;
-lociBatchSize = 1000;
+lociBatchSize =batchSize ;
 freqParam = 1/500; %% 1000, Wright Fisher model
 noOfIndiv = indivCount;
 noOfIndivControl = indivCount;
@@ -27,8 +27,8 @@ probOfVar1 = 2 * varAlleleFreq * (1-varAlleleFreq);
 probOfVar0 = (1-varAlleleFreq)^2;
 probCaseVar2 = probOfCaseVar2;
 probCaseVarParam = alleleRelRisk;
-probCaseVar1 = probCaseVar2 * 1.1;
-probCaseVar0 = probCaseVar1 * 1.1;
+probCaseVar1 = probCaseVar2 * probCaseVarParam;
+probCaseVar0 = probCaseVar1 * probCaseVarParam;
 probCase = probOfVar2 * probCaseVar2 + probOfVar1 * probCaseVar1 + probOfVar0 * probCaseVar0;
 probVar2Case = (probOfVar2 * probCaseVar2) / probCase;
 probVar1Case = (probOfVar1 * probCaseVar1) / probCase;
@@ -39,8 +39,16 @@ noOfIndivVar0 = noOfIndiv - noOfIndivVar2 - noOfIndivVar1;
 disp(probVar2Case);
 disp(probVar1Case);
 disp(probVar0Case);
-%%
+%%% Calculate the same for Controls also
+probControl = 1 - probCase;
+probVar2Control = (probOfVar2 * (1-probCaseVar2))/ probControl;
+probVar1Control = (probOfVar1 * (1-probCaseVar1))/ probControl;
+probVar0Control = (probOfVar0 * (1-probCaseVar0))/ probControl;
+noOfIndivCVar2 = round(probVar2Control * noOfIndiv);
+noOfIndivCVar1 = round(probVar1Control * noOfIndiv);
+noOfIndivCVar0 = noOfIndivControl - noOfIndivCVar2 - noOfIndivCVar1;
 
+%%
 drawFrom  = ones(noOfSubPop,1);
 %ratios1 = [0.7;0.2;0.1]; % Ratios of contribution of each sub pop
 %ratios2 = [0.4;0;0.6];
@@ -58,23 +66,21 @@ for i = 1: noOfPop
 	[pops(i,:),ratios(:,i)] = population_simulator(subPops,drawFrom);
 	disp(pops(i,caseSnpLoc));
 end
-
+disp('Ratios are - ');
+disp(ratios); 
 disp('Population Gene Densities Generated');
-%indiv = zeros(noOfIndivVar2,lociBatchSize,noOfPop);
-indivInfo = zeros(noOfPop*(noOfIndivVar2 + noOfIndivVar1 + noOfIndivVar0),2);
+indivInfo = zeros(noOfPop*(noOfIndiv),2);
 batchCtr = noOfMarkerLoci/lociBatchSize;
-disp(batchCtr);
 for j = 1:batchCtr
 	disp('batch - '); disp(j);
 	% Check if caseSnpLoc is in this batch or not
 	if((caseSnpLoc >= ((j-1)*lociBatchSize+1)) & (caseSnpLoc <= (j*lociBatchSize)))
 		% generate the batch for the caseSNP. no of columns wud be (noofIndivVar2 + noOfIndivvar1 + 0 + control), rows will be the lociBatchSize. 
 		disp('Case SNP Case');
-		tmpNoOfIndiv = noOfIndivVar2 + noOfIndivVar1 + noOfIndivVar0 + noOfIndivControl;
+		tmpNoOfIndiv = noOfIndiv + noOfIndivControl;
 		tmpPopsMatrix = pops(:,(j-1)*lociBatchSize+1:j*lociBatchSize);
-		[merge indivInfo] = eigenstrat_create_case_snp_batch(tmpPopsMatrix,noOfIndivVar2,noOfIndivVar1,noOfIndivVar0,caseSnpLoc,lociBatchSize,alleleVar2,alleleVar1,alleleVar0,probVar2Case,probVar1Case,probVar0Case);	
+		[merge indivInfo] = eigenstrat_create_case_snp_batch(tmpPopsMatrix,caseSnpLoc,lociBatchSize,alleleVar2,alleleVar1,alleleVar0,noOfIndiv,probVar2Case,probVar1Case,probVar0Case,noOfIndivControl,probVar2Control,probVar1Control,probVar0Control);	
 	else
-	%	disp(' Other case');
 		%% create Var2
 		indiv1 = zeros(noOfIndivVar2,lociBatchSize,noOfPop);
 		for i = 1:noOfPop
