@@ -5,6 +5,7 @@ distBest = 10000000;
 bestPrediction = 1 ;
 
 for ff1 = 1:NoOfBatch
+	disp(ff1);
 	ff1name = sprintf('files%d/rawPredictions.txt',ff1);
 	file1 = fopen(ff1name,'r');
 	leader = dlmread(file1);
@@ -18,8 +19,8 @@ for ff1 = 1:NoOfBatch
 		file2 = fopen(ff2name,'r');
 		actual = dlmread(file1);
 		pred = dlmread(file2);
-		actual = actual'
-		pred = pred'
+		actual = actual' ;
+		pred = pred' ;
 		n = size(pred,1);
 		dist = zeros(n,n);
 		for i = 1:n
@@ -27,8 +28,8 @@ for ff1 = 1:NoOfBatch
 				dist(i,j) = norm(actual(i,:)-pred(j,:));
 			end
 		end
-		dist
-		dist = 1 ./ dist
+		dist ;
+		dist = 1 ./ dist ;
 		cd ../gaimc
 		[error actV  predV]=bipartite_matching(dist);
 		predM = pred;

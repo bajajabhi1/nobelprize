@@ -32,6 +32,7 @@ for i=1:n
 	LLInd = Ind ; 
 	Ind = Ind + begin - 1;  
 	if ( i<=500)
+		%pwd
 		fid = fopen(filename,'a') ;
 		%disp(filename);
 		fprintf(fid,formatSpec,[Ind;toPrint]);

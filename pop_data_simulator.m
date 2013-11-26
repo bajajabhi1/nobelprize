@@ -29,7 +29,7 @@ end
 drawFrom  = ones(noOfSubPop,1);
 ratios1 = [0.70;0.20;0.10]; % Ratios of contribution of each sub pop
 ratios2 = [0.20;0.65;0.15];
-ratios3 = [0.20;0.00;0.80];
+ratios3 = [0.20;0.01;0.79];
 ratios4 = [0.50;0.40;0.10];
 ratios5 = [0.30;0.60;0.10];
 ratios6 = [0.10;0.10;0.80];

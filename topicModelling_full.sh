@@ -22,12 +22,13 @@ folder='aplha-'$4'-freq-'$2'-loci-'$1'-indiv-'$3'-iter-'$5
 #folder='loci-'
 #folder=$folder$1'-freq-'$2'-indiv-'$3
 #echo $folder
-mv files $folder
-mv 'true.txt' $folder
-mv 'rawPredictions.txt' $folder
-mv 'predicted.txt' $folder
-mv Indiv* $folder
-mkdir files
+
+#mv files $folder
+#mv 'true.txt' $folder
+#mv 'rawPredictions.txt' $folder
+#mv 'predicted.txt' $folder
+#mv Indiv* $folder
+#mkdir files
 
 
 
