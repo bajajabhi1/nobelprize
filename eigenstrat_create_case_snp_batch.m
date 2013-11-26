@@ -1,9 +1,16 @@
 %%%%
 %% Abhinav Bajaj  %%%
 %%%%
-function [merge indivInfo] = eigenstrat_create_case_snp_batch(pops,noOfIndivVar2,noOfIndivVar1,noOfIndivVar0,caseSnpLoc,lociBatchSize,alleleVar2,alleleVar1,alleleVar0, probVar2Case,probVar1Case,probVar0Case)
+function [merge indivInfo] = eigenstrat_create_case_snp_batch(pops,caseSnpLoc,lociBatchSize,alleleVar2,alleleVar1,alleleVar0,noOfIndiv, probVar2Case,probVar1Case,probVar0Case,noOfIndivControl,probVar2Control,probVar1Control,probVar0Control)
     
-tmpNoOfIndiv = 2 * (noOfIndivVar2 + noOfIndivVar1 + noOfIndivVar0);
+tmpNoOfIndiv = noOfIndiv + noOfIndivControl;
+noOfIndivVar2 = round(probVar2Case * noOfIndiv);
+noOfIndivVar1 = round(probVar1Case * noOfIndiv);
+noOfIndivVar0 = noOfIndiv - noOfIndivVar2 - noOfIndivVar1;
+
+noOfIndivCVar2 = round(probVar2Control * noOfIndiv);
+noOfIndivCVar1 = round(probVar1Control * noOfIndiv);
+noOfIndivCVar0 = noOfIndivControl - noOfIndivCVar2 - noOfIndivCVar1;
 noOfPop = size(pops,1);
 indiv = zeros(noOfPop*tmpNoOfIndiv,lociBatchSize);
 indivInfo = zeros(noOfPop*tmpNoOfIndiv,2);
@@ -66,34 +73,40 @@ for i = 1:noOfPop
                 	end
 			
 			if (~status & findCVar2 & tmpSnpDrawn == alleleVar2)
-				nt = nt+1;
-                                nc2 = nc2+1;
-				indiv((i-1)*tmpNoOfIndiv+nt,:) = indivDrawn(j,:,i);
-				indivInfo((i-1)*tmpNoOfIndiv+nt,:) = [i 0];
-				status = true;
-				if (nc2 >= noOfIndivVar2)
+                                if (rand(1,1) <= probVar2Control)
+					nt = nt+1;
+                                	nc2 = nc2+1;
+					indiv((i-1)*tmpNoOfIndiv+nt,:) = indivDrawn(j,:,i);
+					indivInfo((i-1)*tmpNoOfIndiv+nt,:) = [i 0];
+					status = true;
+			        end	
+				if (nc2 >= noOfIndivCVar2)
 					findCVar2 = false;disp('done with Control Var2');
 				end
 			
 			elseif (~status & findCVar1 & tmpSnpDrawn == alleleVar1)
                                 % do a coin toss with probability of alleleVar1
-				nt = nt+1;
-                                nc1 = nc1+1;
-                                indiv((i-1)*tmpNoOfIndiv+nt,:) = indivDrawn(j,:,i);
-				indivInfo((i-1)*tmpNoOfIndiv+nt,:) = [i 0];
-                                status = true;
-                                if (nc1 >= noOfIndivVar1)
+                                if (rand(1,1) <= probVar1Control)
+					nt = nt+1;
+	                                nc1 = nc1+1;
+        	                        indiv((i-1)*tmpNoOfIndiv+nt,:) = indivDrawn(j,:,i);
+					indivInfo((i-1)*tmpNoOfIndiv+nt,:) = [i 0];
+                        	        status = true;
+                                end
+				 if (nc1 >= noOfIndivCVar1)
                                         findCVar1 = false;disp('done with Control Var1');
                                 end
                         
 			elseif (~status & findCVar0 & tmpSnpDrawn == alleleVar0)
                                 % do a coin toss with probability of alleleVar0
-				nt = nt+1;
-                                nc0 = nc0+1;
-				indiv((i-1)*tmpNoOfIndiv+nt,:) = indivDrawn(j,:,i);
-				indivInfo((i-1)*tmpNoOfIndiv+nt,:) = [i 0];
-                                status = true;
-                                if (nc0 >= noOfIndivVar0)
+                                if (rand(1,1) <= probVar0Control)
+					nt = nt+1;
+                	                nc0 = nc0+1;
+					indiv((i-1)*tmpNoOfIndiv+nt,:) = indivDrawn(j,:,i);
+					indivInfo((i-1)*tmpNoOfIndiv+nt,:) = [i 0];
+                                	status = true;
+				end
+                                if (nc0 >= noOfIndivCVar0)
                                         findCVar0 = false;disp('done with Control Var0');
                                 end
                 	end
@@ -107,4 +120,10 @@ for i = 1:noOfPop
 	end % end of infinite while
 
 end % end for all outermost loop, sampled for all populations
+disp(n2);
+disp(n1);
+disp(n0);
+disp(nc2);
+disp(nc1);
+disp(nc0);
 merge = indiv';
