@@ -47,6 +47,9 @@ probVar0Control = (probOfVar0 * (1-probCaseVar0))/ probControl;
 noOfIndivCVar2 = round(probVar2Control * noOfIndiv);
 noOfIndivCVar1 = round(probVar1Control * noOfIndiv);
 noOfIndivCVar0 = noOfIndivControl - noOfIndivCVar2 - noOfIndivCVar1;
+disp(probVar2Control);
+disp(probVar1Control);
+disp(probVar0Control);
 
 %%
 drawFrom  = ones(noOfSubPop,1);
