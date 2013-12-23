@@ -4,7 +4,7 @@
 %%%
 %%% outPopFormat - Output file format for Population
 %%%%
-rand("seed",1000456);
+%rand("seed",1000456);
 noOfSubPop = 3;
 noOfPop = 10;
 
@@ -23,7 +23,7 @@ NoOfBatch = noOfMarkerLoci/batchSize;
 drawFrom  = ones(noOfSubPop,1);
 ratios1 = [0.70;0.20;0.10]; % Ratios of contribution of each sub pop
 ratios2 = [0.20;0.65;0.15];
-ratios3 = [0.20;0.00;0.80];
+ratios3 = [0.199;0.001;0.80];
 ratios4 = [0.50;0.40;0.10];
 ratios5 = [0.30;0.60;0.10];
 ratios6 = [0.10;0.10;0.80];
@@ -31,6 +31,9 @@ ratios7 = [0.15;0.25;0.60];
 ratios8 = [0.10;0.35;0.45];
 ratios9 = [0.05;0.60;0.35];
 ratios10 = [0.4;0.20;0.40];
+%ratios1 = [1;0;0]; % Ratios of contribution of each sub pop
+%ratios2 = [0;1;0];
+%ratios3 = [0;0;1];
 
 ratios = [ratios1 ratios2 ratios3 ratios4 ratios5 ratios6 ratios7 ratios8 ratios9 ratios10 ] ;
 ratiosWrite = ratios';

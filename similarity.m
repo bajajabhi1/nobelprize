@@ -1,5 +1,5 @@
-filename1 = 'aplha-50-freq-1000-loci-10000-indiv-500-iter-200/predictedFinal.txt'
-filename2 = 'true.txt'
+filename1 = 'predicted.txt';
+filename2 = 'true.txt';
 predicted = dlmread(filename1) ;
 original = dlmread(filename2) ; 
 sim = zeros(10,1);
@@ -16,4 +16,6 @@ end
 sumErr = sum(sim) ;
 avgErr = mean(sim) ; 
 disp(avgErr);
-disp(sumErr);
+f1 = fopen('results.txt','a') ;
+fprintf(f1, '%f ', avgErr);
+%disp(sumErr);

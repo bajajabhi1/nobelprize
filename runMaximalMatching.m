@@ -70,6 +70,6 @@ for ff1 = 1:NoOfBatch
 
 end
 
-writeFile = sprintf('predictedFinal.txt') ; 
+writeFile = sprintf('../rawPredictions.txt') ; 
 dlmwrite(writeFile,bestPrediction,' ');
 		

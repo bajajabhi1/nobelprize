@@ -16,8 +16,12 @@ cd ../nobel/nobelprize
 python parseResults_full.py
 octave runMaximalMatching_full.m
 echo "done"
+octave similarity.m
+rm files -r
+mkdir files
 #folder='files'
 #folder=$folder$(date +"%m_%d_%Y_%H_%M_%S")
+
 folder='aplha-'$4'-freq-'$2'-loci-'$1'-indiv-'$3'-iter-'$5
 #folder='loci-'
 #folder=$folder$1'-freq-'$2'-indiv-'$3

@@ -31,18 +31,18 @@ for i=1:n
 	toPrint = cohort(i,Ind);
 	LLInd = Ind ; 
 	Ind = Ind + begin - 1;  
-	if ( i<=500)
-		%pwd
-		fid = fopen(filename,'a') ;
-		%disp(filename);
-		fprintf(fid,formatSpec,[Ind;toPrint]);
-		fclose(fid);
-	else
-		fid2 = fopen(filename2,'a');
-	
-		fprintf(fid2,formatSpec,[Ind;toPrint]);
-		fclose(fid2);
-	endif
+	%if ( i<=500)
+	%pwd
+	fid = fopen(filename,'a') ;
+	%disp(filename);
+	fprintf(fid,formatSpec,[Ind;toPrint]);
+	fclose(fid);
+	%else
+	%	fid2 = fopen(filename2,'a');
+	%
+	%	fprintf(fid2,formatSpec,[Ind;toPrint]);
+	%	fclose(fid2);
+	%endif
 	%size(LLInd)
 	for yy = 1:length(LLInd)
 		Token = Token + 1;
